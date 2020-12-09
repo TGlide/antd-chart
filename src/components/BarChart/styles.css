@@ -1,0 +1,39 @@
+.legends {
+  display: flex;
+  align-items: center;
+}
+
+.legends__item {
+  display: flex;
+  align-items: center;
+}
+
+.legends__item:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.legends__color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.legends__color--green {
+  background-color: #73d13d;
+}
+
+.legends__color--red {
+  background-color: #d4380d;
+}
+
+.legends__color--gray {
+  background-color: #8c8c8c;
+}
+
+.legends__label {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #595959;
+}

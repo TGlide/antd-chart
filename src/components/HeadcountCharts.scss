@@ -1,0 +1,11 @@
+$neutral-9: #434343;
+
+.hc-chart {
+  margin-bottom: 2rem;
+  .ant-card-head-title {
+    color: $neutral-9;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    text-align: left;
+  }
+}
