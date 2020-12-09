@@ -11,29 +11,12 @@ import { ReactComponent as LineSVG } from "../../line.svg";
 const defaultMargin = { top: 40, right: 40, bottom: 40, left: 40 };
 const defaultPadding = { top: 40, right: 40, bottom: 40, left: 40 };
 const background = "#ffffff";
-const data = [
-  { x: "15/06", y: 111 },
-  { x: "16/06", y: 100 },
-  { x: "17/06", y: 94 },
-  { x: "18/06", y: 111 },
-  { x: "19/06", y: 100 },
-  { x: "20/06", y: 94 },
-  { x: "21/06", y: 94 },
-];
-
-const barData = [
-  { x: "15/06", y1: 111, y2: 150, y3: 111 },
-  { x: "16/06", y1: 100, y2: 140, y3: 100 },
-  { x: "17/06", y1: 94, y2: 134, y3: 94 },
-  { x: "18/06", y1: 110, y2: 121, y3: 111 },
-  { x: "19/06", y1: 99, y2: 110, y3: 100 },
-  { x: "20/06", y1: 93, y2: 114, y3: 124 },
-  { x: "21/06", y1: 93, y2: 114, y3: 124 },
-];
 
 export default function BarLineChart({
   width,
   height,
+  lineData,
+  barData,
   events = false,
   margin = defaultMargin,
   padding = defaultPadding,
@@ -44,14 +27,14 @@ export default function BarLineChart({
   const barYMax = yMax - 50;
 
   const xScale = scaleBand({
-    domain: data.map((d) => d.x),
+    domain: lineData.map((d) => d.x),
     range: [0, xMax],
     round: true,
     padding: 0.2,
   });
 
   const yScale = scaleLinear({
-    domain: [0, Math.max(...data.map((d) => d.y || 0))],
+    domain: [0, Math.max(...lineData.map((d) => d.y || 0))],
     range: [yMax, 0],
   });
 
@@ -85,13 +68,13 @@ export default function BarLineChart({
           bottom={margin.bottom}
         >
           <LinePath
-            data={data}
+            data={lineData}
             stroke="#BFBFBF"
             strokeWidth={""}
             x={(a) => xScale(a.x) + xScale.bandwidth() / 2}
             y={(a) => yScale(a.y)}
           />
-          {data.map((d) => {
+          {lineData.map((d) => {
             const x = xScale(d.x) + xScale.bandwidth() / 2;
             return (
               <>

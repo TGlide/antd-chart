@@ -9,21 +9,14 @@ import "./styles.css";
 import { ReactComponent as LineSVG } from "../../line.svg";
 
 const defaultMargin = { top: 40, right: 0, bottom: 40, left: 40 };
-const defaultPadding = { top: 40, right: 40, bottom: 40, left: 40 };
 const background = "#ffffff";
-
-const barData = [
-  { x: "Outubro MTD", y1: 111, y2: 150 },
-  { x: "Novembro", y2: 100 },
-  { x: "Dezembro", y2: 94 },
-];
 
 export default function BarLineChart({
   width,
   height,
+  barData,
   events = false,
   margin = defaultMargin,
-  padding = defaultPadding,
 }) {
   // bounds
   const xMax = width - margin.left - margin.right;
