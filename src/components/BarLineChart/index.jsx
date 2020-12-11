@@ -51,7 +51,7 @@ export default function BarLineChart({
   const barPadding = 10;
 
   return width < 10 ? null : (
-    <div>
+    <div className={`bar-line`}>
       <svg width={width} height={height}>
         <rect
           x={0}
@@ -135,7 +135,7 @@ export default function BarLineChart({
             const barX =
               xScale(d.x) + xScale.bandwidth() / 2 - barWidth - barPadding / 2;
             const barY = yMax - barHeight;
-            const color = d.y3 > Math.max(d.y2, d.y1) ? "red" : "green";
+            const color = d.y3 > Math.max(d.y2, d.y1) ? "#D4380D" : "#237804";
 
             return (
               <>
@@ -175,7 +175,7 @@ export default function BarLineChart({
                   x={barX}
                   y={barY}
                   width={barWidth}
-                  fill="#ACACAC"
+                  fill="#8C8C8C"
                   strokeWidth="1"
                   height={barHeight}
                 />

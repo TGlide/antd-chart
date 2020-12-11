@@ -3,6 +3,7 @@ import { Group } from "@visx/group";
 import { scaleBand, scaleLinear, scalePoint } from "@visx/scale";
 import { Bar, LinePath } from "@visx/shape";
 import { Text } from "@visx/text";
+
 import React from "react";
 import "./styles.css";
 
@@ -58,7 +59,11 @@ export default function DetailedChart({
   const turnoverYScale = scaleLinear({
     domain: [
       0,
-      Math.max(...turnoverData.map((d) => Math.max(d.bar || 0) || 0)),
+      Math.max(
+        ...turnoverData.map(
+          (d) => Math.max(d.bar || 0, (d.extraBar || 0) + d.bar) || 0
+        )
+      ),
     ],
     range: [barYMax, 50],
   });
@@ -177,16 +182,10 @@ export default function DetailedChart({
         </svg>
         <div className={`legends`} style={{ marginLeft: margin.left }}>
           <div className="legends__item">
-            <div className="legends__color legends__color--green" />
-            <div className="legends__label">Acima da meta</div>
-          </div>
-          <div className="legends__item">
-            <div className="legends__color legends__color--red" />
-            <div className="legends__label">Abaixo da meta</div>
-          </div>
-          <div className="legends__item">
-            <div className="legends__color legends__color--gray" />
-            <div className="legends__label">Meta</div>
+            <div className="legends__color">
+              <LineSVG />
+            </div>
+            <div className="legends__label">TO 90 dias</div>
           </div>
         </div>
       </Col>
@@ -212,8 +211,11 @@ export default function DetailedChart({
             bottom={margin.bottom}
           >
             {turnoverData.map((d) => {
-              const barHeight = barYMax - barYScale(d.bar);
-              const barX = xScale(d.x) + xScale.bandwidth() / 2 - barWidth / 2;
+              const barHeight = barYMax - turnoverYScale(d.bar);
+              const barX =
+                turnoverXScale(d.x) +
+                turnoverXScale.bandwidth() / 2 -
+                barWidth / 2;
               const barY = yMax - barHeight;
               const color = d.x.includes("Meta")
                 ? "#8c8c8c"
@@ -221,8 +223,37 @@ export default function DetailedChart({
                 ? "#D4380D"
                 : "#73D13D";
 
+              const extraBarHeight = d.extraBar
+                ? barYMax - turnoverYScale(d.bar + d.extraBar)
+                : 0;
+              const extraBarY = d.extraBar
+                ? barYMax - extraBarHeight
+                : undefined;
+
               return (
                 <>
+                  {d.extraBar && (
+                    <>
+                      <Bar
+                        x={barX}
+                        y={extraBarY}
+                        width={barWidth}
+                        fill={`${color}aa`}
+                        stroke={`${color}aa`}
+                        height={extraBarHeight}
+                      />
+                      <Text
+                        x={barX + barWidth / 2}
+                        y={extraBarY}
+                        dy={20}
+                        textAnchor="middle"
+                        stroke="white"
+                        fill="white"
+                      >
+                        {`${d.extraBar}`}
+                      </Text>
+                    </>
+                  )}
                   <Bar
                     x={barX}
                     y={barY}
@@ -243,7 +274,7 @@ export default function DetailedChart({
                   </Text>
                   <Text
                     x={barX + barWidth / 2}
-                    y={barY}
+                    y={extraBarY || barY}
                     dy={-20}
                     textAnchor="middle"
                     fill="#8c8c8c"
@@ -257,7 +288,7 @@ export default function DetailedChart({
           <Group left={margin.left} right={margin.right}>
             <AxisBottom
               top={yMax + margin.top}
-              scale={xScale}
+              scale={turnoverXScale}
               stroke={"black"}
               tickStroke={"black"}
               // hideAxisLine
@@ -271,16 +302,12 @@ export default function DetailedChart({
         </svg>
         <div className={`legends`} style={{ marginLeft: margin.left }}>
           <div className="legends__item">
-            <div className="legends__color legends__color--green" />
-            <div className="legends__label">Acima da meta</div>
+            <div className="legends__color legends__color--red-1" />
+            <div className="legends__label">TO involuntário</div>
           </div>
           <div className="legends__item">
-            <div className="legends__color legends__color--red" />
-            <div className="legends__label">Abaixo da meta</div>
-          </div>
-          <div className="legends__item">
-            <div className="legends__color legends__color--gray" />
-            <div className="legends__label">Meta</div>
+            <div className="legends__color legends__color--red-2" />
+            <div className="legends__label">TO voluntário</div>
           </div>
         </div>
       </Col>

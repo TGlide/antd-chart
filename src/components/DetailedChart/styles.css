@@ -49,12 +49,12 @@
   background-color: #73d13d;
 }
 
-.legends__color--red {
+.legends__color--red-1 {
   background-color: #d4380d;
 }
 
-.legends__color--gray {
-  background-color: #8c8c8c;
+.legends__color--red-2 {
+  background-color: #d4380daa;
 }
 
 .legends__label {

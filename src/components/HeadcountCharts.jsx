@@ -41,7 +41,7 @@ const contractsData = [
 const turnoverData = [
   { x: "Agosto", bar: 11, barPercent: 4 },
   { x: "Setembro", bar: 12, barPercent: 4 },
-  { x: "Outubro MTD", bar: 13, barPercent: 4 },
+  { x: "Outubro MTD", bar: 13, barPercent: 4, extraBar: 4 },
   { x: "Meta MTD", bar: 12, barPercent: 5 },
 ];
 
